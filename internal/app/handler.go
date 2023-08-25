@@ -1,13 +1,5 @@
 package app
 
-import (
-	"context"
-	"net/http"
-
-	"github.com/gin-gonic/gin"
-	"go.mongodb.org/mongo-driver/bson"
-)
-
 /*func (a *App) NewRecipeHandler(c *gin.Context) {
 	var recipe domain.Recipe
 
@@ -36,18 +28,6 @@ import (
 
 	c.JSON(http.StatusOK, recipe)
 }*/
-
-func (a *App) ListUserHandler(c *gin.Context) {
-
-	ctx := context.Background()
-	users, err := a.US.ListUser(ctx, bson.M{})
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-
-	c.JSON(http.StatusOK, users)
-}
 
 /*func (a *App) UpdateRecipeHandler(c *gin.Context) {
 	id := c.Param("id")

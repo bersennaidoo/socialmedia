@@ -1,10 +1,15 @@
 package domain
 
-import "time"
+import (
+	"time"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
 
 type User struct {
-	Name      string    `json:"name" bson:"name"`
-	Email     string    `json:"email" bson:"email"`
-	UpdatedAt time.Time `json:"updatedAt" bson:"updatedAt"`
-	Password  string    `json:"password" bson:"password"`
+	ID        primitive.ObjectID `json:"id,omitempty" bson:"_id,omitemty"`
+	Name      string             `json:"name,omitemty" bson:"name,omitemty"`
+	Email     string             `json:"email,omitemty" bson:"email,omitemty"`
+	UpdatedAt time.Time          `json:"updatedAt,omitemty" bson:"updatedAt,omitemty"`
+	Password  string             `json:"password,omitemty" bson:"password,omitemty"`
 }

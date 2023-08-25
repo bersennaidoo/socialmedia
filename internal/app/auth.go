@@ -1,15 +1,9 @@
 package app
 
 import (
-	"context"
-	"crypto/sha256"
-	"net/http"
 	"time"
 
-	"github.com/bersennaidoo/socialmedia/internal/domain"
 	"github.com/dgrijalva/jwt-go"
-	"github.com/gin-gonic/gin"
-	"go.mongodb.org/mongo-driver/bson"
 )
 
 type Claims struct {
@@ -92,39 +86,6 @@ type JWTOutput struct {
 	}
 	c.JSON(http.StatusOK, jwtOutput)
 }*/
-
-func (a *App) CreateUserHandler(c *gin.Context) {
-	var user domain.User
-
-	if err := c.ShouldBindJSON(&user); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": err.Error(),
-		})
-		return
-	}
-
-	h := sha256.New()
-
-	ctx := context.Background()
-
-	err := a.US.CreateUser(ctx, bson.M{
-		"name":      user.Name,
-		"email":     user.Email,
-		"updatedAt": time.Now(),
-		"password":  string(h.Sum([]byte(user.Password))),
-	})
-	if err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{
-			"error": "Invalid username or password",
-		})
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{
-		"message": "SignUp Successfull",
-	})
-
-}
 
 /*func (a *App) SignOutHandler(c *gin.Context) {
 	session := sessions.Default(c)

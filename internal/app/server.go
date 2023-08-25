@@ -17,7 +17,7 @@ func (a *App) RunApi(addr string) {
 	router.GET("/api/users", a.ListUserHandler)
 	router.POST("/api/users", a.CreateUserHandler)
 	//router.GET("/api/users/:userId", a.UserByIdHandler)
-	//router.PUT("/api/users/:userId", a.UpdateUserHandler)
+	router.PUT("/api/users/:userId", a.UpdateUserHandler)
 	//router.DELETE("/api/users/:userId", a.DeleteUserHandler)
 
 	/*authorized := router.Group("/")

@@ -57,8 +57,6 @@ func (rs *RecipeService) UpdateRecipe(ctx context.Context, bs bson.M, bd bson.D)
 	}
 
 	return nil
-
-	return nil
 }
 
 func (rs *RecipeService) DeleteRecipe(ctx context.Context, bs bson.M) error {

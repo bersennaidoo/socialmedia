@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"log"
 
 	"github.com/bersennaidoo/socialmedia/internal/domain"
 	"go.mongodb.org/mongo-driver/bson"
@@ -57,4 +58,16 @@ func (us *UserService) ListUser(ctx context.Context, bs bson.M) ([]domain.User, 
 	}
 
 	return users, nil
+}
+
+func (us *UserService) UpdateUser(ctx context.Context, bs bson.M, bd bson.D) error {
+	collection := us.MC.Database("social").Collection("users")
+
+	_, err := collection.UpdateOne(ctx, bs, bd)
+	if err != nil {
+		log.Printf("%v", err)
+		return err
+	}
+
+	return nil
 }
