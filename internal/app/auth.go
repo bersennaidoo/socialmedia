@@ -1,9 +1,17 @@
 package app
 
 import (
+	"context"
+	"crypto/sha256"
+	"net/http"
 	"time"
 
+	"github.com/bersennaidoo/socialmedia/internal/domain"
 	"github.com/dgrijalva/jwt-go"
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-gonic/gin"
+	"github.com/rs/xid"
+	"go.mongodb.org/mongo-driver/bson"
 )
 
 type Claims struct {
@@ -16,7 +24,7 @@ type JWTOutput struct {
 	Expires time.Time `json:"expires"`
 }
 
-/*func (a *App) SignInHandler(c *gin.Context) {
+func (a *App) SignInHandler(c *gin.Context) {
 	var user domain.User
 	if err := c.ShouldBindJSON(&user); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -30,7 +38,7 @@ type JWTOutput struct {
 	ctx := context.Background()
 
 	err := a.US.SignIn(ctx, bson.M{
-		"username": user.Username,
+		"name":     user.Name,
 		"password": string(h.Sum([]byte(user.Password))),
 	})
 	if err != nil {
@@ -42,14 +50,14 @@ type JWTOutput struct {
 
 	sessionToken := xid.New().String()
 	session := sessions.Default(c)
-	session.Set("username", user.Username)
+	session.Set("name", user.Name)
 	session.Set("token", sessionToken)
 	session.Save()
 
 	c.JSON(http.StatusOK, gin.H{
 		"message": "User signed in",
 	})
-}*/
+}
 
 /*func (a *App) RefreshHandler(c *gin.Context) {
 	tokenValue := c.GetHeader("Authorization")
@@ -87,7 +95,7 @@ type JWTOutput struct {
 	c.JSON(http.StatusOK, jwtOutput)
 }*/
 
-/*func (a *App) SignOutHandler(c *gin.Context) {
+func (a *App) SignOutHandler(c *gin.Context) {
 	session := sessions.Default(c)
 	session.Clear()
 	session.Save()
@@ -95,4 +103,4 @@ type JWTOutput struct {
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Signed out...",
 	})
-}*/
+}

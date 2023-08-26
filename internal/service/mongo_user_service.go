@@ -19,15 +19,15 @@ func NewUserService(mc *mongo.Client) *UserService {
 	}
 }
 
-/*func (us *UserService) SignIn(ctx context.Context, bs bson.M) error {
-	collection := us.MC.Database("demo").Collection("users")
+func (us *UserService) SignIn(ctx context.Context, bs bson.M) error {
+	collection := us.MC.Database("social").Collection("users")
 
 	cur := collection.FindOne(ctx, bs)
 	if cur.Err() != nil {
 		return cur.Err()
 	}
 	return nil
-}*/
+}
 
 func (us *UserService) CreateUser(ctx context.Context, bs bson.M) error {
 	collection := us.MC.Database("social").Collection("users")
