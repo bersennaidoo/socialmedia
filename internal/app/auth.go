@@ -38,7 +38,7 @@ func (a *App) SignInHandler(c *gin.Context) {
 	ctx := context.Background()
 
 	err := a.US.SignIn(ctx, bson.M{
-		"name":     user.Name,
+		"email":    user.Email,
 		"password": string(h.Sum([]byte(user.Password))),
 	})
 	if err != nil {
@@ -50,7 +50,7 @@ func (a *App) SignInHandler(c *gin.Context) {
 
 	sessionToken := xid.New().String()
 	session := sessions.Default(c)
-	session.Set("name", user.Name)
+	session.Set("email", user.Email)
 	session.Set("token", sessionToken)
 	session.Save()
 
