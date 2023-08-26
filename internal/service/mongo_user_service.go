@@ -71,3 +71,29 @@ func (us *UserService) UpdateUser(ctx context.Context, bs bson.M, bd bson.D) err
 
 	return nil
 }
+
+func (us *UserService) UserById(ctx context.Context, bs bson.M) (domain.User, error) {
+	collection := us.MC.Database("social").Collection("users")
+	cur := collection.FindOne(ctx, bs)
+
+	var user domain.User
+	err := cur.Decode(&user)
+	if err != nil {
+		return domain.User{}, err
+	}
+
+	user.Password = ""
+
+	return user, nil
+}
+
+func (us *UserService) DeleteUser(ctx context.Context, bs bson.M) error {
+	collection := us.MC.Database("social").Collection("users")
+
+	_, err := collection.DeleteOne(ctx, bs)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

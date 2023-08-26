@@ -93,3 +93,46 @@ func (a *App) UpdateUserHandler(c *gin.Context) {
 		"message": "User has been updated",
 	})
 }
+
+func (a *App) UserByIdHandler(c *gin.Context) {
+	id := c.Param("userId")
+	objectId, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "user id does not exist",
+		})
+	}
+
+	ctx := context.Background()
+	user, err := a.US.UserById(ctx, bson.M{
+		"_id": objectId,
+	})
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, user)
+}
+
+func (a *App) DeleteUserHandler(c *gin.Context) {
+	id := c.Param("userId")
+
+	ctx := context.Background()
+
+	objectId, _ := primitive.ObjectIDFromHex(id)
+	err := a.US.DeleteUser(ctx, bson.M{
+		"_id": objectId,
+	})
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "User has been deleted"})
+}

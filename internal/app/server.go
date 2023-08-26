@@ -16,9 +16,9 @@ func (a *App) RunApi(addr string) {
 	//router.POST("/signout", a.SignOutHandler)
 	router.GET("/api/users", a.ListUserHandler)
 	router.POST("/api/users", a.CreateUserHandler)
-	//router.GET("/api/users/:userId", a.UserByIdHandler)
+	router.GET("/api/users/:userId", a.UserByIdHandler)
 	router.PUT("/api/users/:userId", a.UpdateUserHandler)
-	//router.DELETE("/api/users/:userId", a.DeleteUserHandler)
+	router.DELETE("/api/users/:userId", a.DeleteUserHandler)
 
 	/*authorized := router.Group("/")
 	authorized.Use(a.AuthMiddleware())
