@@ -50,7 +50,7 @@ export default function EditProfile({ match }) {
   const jwt = auth.isAuthenticated()
 
   useEffect(() => {
-    const abortController = new AbortController()
+    const abortController = new window.AbortController()
     const signal = abortController.signal
 
     read({

@@ -96,12 +96,7 @@ func (a *App) UpdateUserHandler(c *gin.Context) {
 
 func (a *App) UserByIdHandler(c *gin.Context) {
 	id := c.Param("userId")
-	objectId, err := primitive.ObjectIDFromHex(id)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "user id does not exist",
-		})
-	}
+	objectId, _ := primitive.ObjectIDFromHex(id)
 
 	ctx := context.Background()
 	user, err := a.US.UserById(ctx, bson.M{

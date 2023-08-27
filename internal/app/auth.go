@@ -50,9 +50,7 @@ func (a *App) SignInHandler(c *gin.Context) {
 
 	sessionToken := xid.New().String()
 	session := sessions.Default(c)
-	session.Set("_id", signinUser.ID)
 	session.Set("name", signinUser.Name)
-	session.Set("email", signinUser.Email)
 	session.Set("token", sessionToken)
 	session.Save()
 

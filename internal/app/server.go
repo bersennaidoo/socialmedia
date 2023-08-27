@@ -28,11 +28,11 @@ func (a *App) RunApi(addr string) {
 
 	router.POST("/signin", a.SignInHandler)
 	//router.POST("/refresh", a.RefreshHandler)
-	router.POST("/signout", a.SignOutHandler)
+	router.GET("/signout", a.SignOutHandler)
 	router.GET("/api/users", a.ListUserHandler)
 	router.POST("/api/users", a.CreateUserHandler)
 
-	authorized := router.Group("/api")
+	authorized := router.Group("/api/")
 	authorized.Use(a.AuthMiddleware())
 	{
 
