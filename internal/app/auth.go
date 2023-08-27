@@ -37,7 +37,7 @@ func (a *App) SignInHandler(c *gin.Context) {
 
 	ctx := context.Background()
 
-	err := a.US.SignIn(ctx, bson.M{
+	signinUser, err := a.US.SignIn(ctx, bson.M{
 		"email":    user.Email,
 		"password": string(h.Sum([]byte(user.Password))),
 	})
@@ -50,13 +50,19 @@ func (a *App) SignInHandler(c *gin.Context) {
 
 	sessionToken := xid.New().String()
 	session := sessions.Default(c)
-	session.Set("email", user.Email)
+	session.Set("_id", signinUser.ID)
+	session.Set("name", signinUser.Name)
+	session.Set("email", signinUser.Email)
 	session.Set("token", sessionToken)
 	session.Save()
 
 	c.JSON(http.StatusOK, gin.H{
-		"message": "User signed in",
-	})
+		"token": session.Get("token"),
+		"user": gin.H{
+			"_id":   signinUser.ID,
+			"name":  signinUser.Name,
+			"email": signinUser.Email,
+		}})
 }
 
 /*func (a *App) RefreshHandler(c *gin.Context) {

@@ -22,7 +22,7 @@ import (
 }*/
 
 type UserInterface interface {
-	SignIn(ctx context.Context, bs bson.M) error
+	SignIn(ctx context.Context, bs bson.M) (domain.User, error)
 	CreateUser(ctx context.Context, bs bson.M) error
 	ListUser(ctx context.Context, bs bson.M) ([]domain.User, error)
 	UpdateUser(ctx context.Context, bs bson.M, bd bson.D) error

@@ -1,6 +1,9 @@
 package app
 
 import (
+	"time"
+
+	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/sessions"
 	redisStore "github.com/gin-contrib/sessions/redis"
 
@@ -13,7 +16,16 @@ func (a *App) RunApi(addr string) {
 	store, _ := redisStore.NewStore(10, "tcp", "localhost:6379", "", []byte("secret"))
 	router.Use(sessions.Sessions("users_api", store))
 
-	//router.GET("/recipes", a.ListRecipesHandler)
+	router.Use(cors.Default())
+	router.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost:3000"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
+		AllowHeaders:     []string{"Origin"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}))
+
 	router.POST("/signin", a.SignInHandler)
 	//router.POST("/refresh", a.RefreshHandler)
 	router.POST("/signout", a.SignOutHandler)
