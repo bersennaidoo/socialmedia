@@ -6,6 +6,7 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/sessions"
 	redisStore "github.com/gin-contrib/sessions/redis"
+	"github.com/gin-contrib/static"
 
 	"github.com/gin-gonic/gin"
 )
@@ -27,7 +28,6 @@ func (a *App) RunApi(addr string) {
 	}))
 
 	router.POST("/signin", a.SignInHandler)
-	//router.POST("/refresh", a.RefreshHandler)
 	router.GET("/signout", a.SignOutHandler)
 	router.GET("/api/users", a.ListUserHandler)
 	router.POST("/api/users", a.CreateUserHandler)
@@ -41,16 +41,7 @@ func (a *App) RunApi(addr string) {
 		authorized.DELETE("/users/:userId", a.DeleteUserHandler)
 	}
 
-	/*authorized := router.Group("/")
-	authorized.Use(a.AuthMiddleware())
-	{
-
-		authorized.POST("/recipes", a.NewRecipeHandler)
-		authorized.PUT("/recipes/:id", a.UpdateRecipeHandler)
-		authorized.DELETE("/recipes/:id", a.DeleteRecipeHandler)
-		authorized.GET("/recipes/:id", a.GetRecipeHandler)
-		//authorized.GET("/recipes/search", a.SearchRecipesHandler)
-	}*/
+	router.Use(static.ServeRoot("/", "./ui/socialmedia/build"))
 
 	router.Run(addr)
 }

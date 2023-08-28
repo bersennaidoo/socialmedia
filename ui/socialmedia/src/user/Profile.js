@@ -85,8 +85,7 @@ export default function Profile({ match }) {
           </ListItem>
           <Divider/>
           <ListItem>
-            <ListItemText primary={"Joined: " + (
-              new Date(user.created)).toDateString()}/>
+            <ListItemText primary={"Joined: " + user.created}/>
           </ListItem>
         </List>
       </Paper>

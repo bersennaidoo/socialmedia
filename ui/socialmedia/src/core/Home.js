@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.openTitle
   },
   media: {
-    minHeight: 400
+    minHeight: 600
   },
   credit: {
     padding: 10,
@@ -39,10 +39,10 @@ export default function Home(){
             Home Page
           </Typography>
           <CardMedia className={classes.media} image={unicornbikeImg} title="Unicorn Bicycle"/>
-          <Typography variant="body2" component="p" className={classes.credit} color="textSecondary">Photo by <a href="https://unsplash.com/@boudewijn_huysmans" target="_blank" rel="noopener noreferrer">Boudewijn Huysmans</a> on Unsplash</Typography>
+          <Typography variant="body2" component="p" className={classes.credit} color="textSecondary">Photo by <a href="https://unsplash.com/@boudewijn_huysmans" target="_blank" rel="noopener noreferrer">takecare of  our pets</a> on Unsplash</Typography>
           <CardContent>
             <Typography variant="body1" component="p">
-              Welcome to the MERN Skeleton home page.
+              Welcome to the MGRG Skeleton home page.
             </Typography>
           </CardContent>
         </Card>
